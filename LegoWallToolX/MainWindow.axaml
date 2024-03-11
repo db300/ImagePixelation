@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:uc="clr-namespace:LegoWallToolX;assembly=LegoWallToolX"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="LegoWallToolX.MainWindow"
+        Title="LegoWallToolX">
+  <DockPanel>
+    <Menu DockPanel.Dock="Top">
+      <MenuItem Header="文件">
+        <MenuItem Header="打开..." Click="Open_Click"/>
+        <MenuItem Header="保存..." Click="Save_Click"/>
+        <Separator/>
+        <MenuItem Header="退出" Click="Exit_Click"/>
+      </MenuItem>
+      <MenuItem Header="帮助">
+        <MenuItem Header="关于..." Click="About_Click"/>
+      </MenuItem>
+    </Menu>
+    <DockPanel>
+      <StackPanel DockPanel.Dock="Left" Background="Blue" Width="100">
+      </StackPanel>
+      <StackPanel DockPanel.Dock="Right" Width="200" Orientation="Vertical">
+        <Expander Header="预览" IsExpanded="True" HorizontalAlignment="Stretch" Padding="5">
+          <Canvas Height="200" Background="AliceBlue" Margin="0"/>
+        </Expander>
+        <Expander Header="调色盘" IsExpanded="True" HorizontalAlignment="Stretch" Padding="5">
+          <uc:ColorPalette Height="190" Background="AliceBlue"/>
+        </Expander>
+      </StackPanel>
+      <Canvas Background="Yellow"/>
+    </DockPanel>
+  </DockPanel>
+</Window>

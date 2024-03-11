@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegoWallDesignTool", "LegoW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHawkPixelLibrary", "iHawkPixelLibrary\iHawkPixelLibrary.csproj", "{E14CD463-FBE4-4391-B0E2-119489F86C3C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegoWallToolX", "LegoWallToolX\LegoWallToolX.csproj", "{356A2076-E618-4934-84F7-0F27B6AAD93C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{E14CD463-FBE4-4391-B0E2-119489F86C3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E14CD463-FBE4-4391-B0E2-119489F86C3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E14CD463-FBE4-4391-B0E2-119489F86C3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{356A2076-E618-4934-84F7-0F27B6AAD93C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{356A2076-E618-4934-84F7-0F27B6AAD93C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{356A2076-E618-4934-84F7-0F27B6AAD93C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{356A2076-E618-4934-84F7-0F27B6AAD93C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
