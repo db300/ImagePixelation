@@ -9,6 +9,7 @@
   <DockPanel>
     <Menu DockPanel.Dock="Top">
       <MenuItem Header="文件">
+        <MenuItem Header="新建..." Click="New_Click"/>
         <MenuItem Header="打开..." Click="Open_Click"/>
         <MenuItem Header="保存..." Click="Save_Click"/>
         <Separator/>
@@ -29,7 +30,7 @@
           <uc:ColorPalette Height="190" Background="AliceBlue"/>
         </Expander>
       </StackPanel>
-      <Canvas Background="Yellow"/>
+      <uc:MainCanvas x:Name="_mainCanvas"/>
     </DockPanel>
   </DockPanel>
 </Window>

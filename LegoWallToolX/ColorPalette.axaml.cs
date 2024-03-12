@@ -11,7 +11,7 @@ using System.Linq;
 namespace LegoWallToolX;
 
 /// <summary>
-/// µ÷É«°å
+/// è°ƒè‰²æ¿
 /// </summary>
 public partial class ColorPalette : UserControl
 {
@@ -25,21 +25,36 @@ public partial class ColorPalette : UserControl
     #endregion
 
     #region property
-    private static readonly List<ColorPaletteItem> _availableColors = new()
+    private static readonly List<ColorPaletteItem> _availableColors =
+    [
+        new ColorPaletteItem { Color = Color.FromRgb(255, 0, 0), Name = "çº¢è‰²" },
+        new ColorPaletteItem { Color = Color.FromRgb(0, 0, 255), Name = "è“è‰²" },
+        new ColorPaletteItem { Color = Color.FromRgb(0, 255, 0), Name = "ç»¿è‰²" },
+        new ColorPaletteItem { Color = Color.FromRgb(255, 255, 0), Name = "é»„è‰²" },
+        new ColorPaletteItem { Color = Color.FromRgb(255, 255, 255), Name = "ç™½è‰²" },
+        new ColorPaletteItem { Color = Color.FromRgb(0, 0, 0), Name = "é»‘è‰²" },
+        new ColorPaletteItem { Color = Color.FromRgb(255, 182, 193), Name = "ç²‰è‰²" },
+        new ColorPaletteItem { Color = Color.FromRgb(255, 165, 0), Name = "æ©™è‰²" },
+        new ColorPaletteItem { Color = Color.FromRgb(165, 42, 42), Name = "æ£•è‰²" },
+        new ColorPaletteItem { Color = Color.FromRgb(128, 128, 128), Name = "ç°è‰²" },
+        new ColorPaletteItem { Color = Color.FromRgb(128, 0, 128), Name = "ç´«è‰²" },
+        new ColorPaletteItem { Color = Color.FromRgb(218, 165, 32), Name = "é‡‘è‰²" }
+    ];
+    #endregion
+
+    #region event handler
+    private void Border_PointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)
     {
-        new ColorPaletteItem { Color = Color.FromRgb(255, 0, 0), Name = "ºìÉ«" },
-        new ColorPaletteItem { Color = Color.FromRgb(0, 0, 255), Name = "À¶É«" },
-        new ColorPaletteItem { Color = Color.FromRgb(0, 255, 0), Name = "ÂÌÉ«" },
-        new ColorPaletteItem { Color = Color.FromRgb(255, 255, 0), Name = "»ÆÉ«" },
-        new ColorPaletteItem { Color = Color.FromRgb(255, 255, 255), Name = "°×É«" },
-        new ColorPaletteItem { Color = Color.FromRgb(0, 0, 0), Name = "ºÚÉ«" },
-        new ColorPaletteItem { Color = Color.FromRgb(255, 182, 193), Name = "·ÛÉ«" },
-        new ColorPaletteItem { Color = Color.FromRgb(255, 165, 0), Name = "³ÈÉ«" },
-        new ColorPaletteItem { Color = Color.FromRgb(165, 42, 42), Name = "×ØÉ«" },
-        new ColorPaletteItem { Color = Color.FromRgb(128, 128, 128), Name = "»ÒÉ«" },
-        new ColorPaletteItem { Color = Color.FromRgb(128, 0, 128), Name = "×ÏÉ«" },
-        new ColorPaletteItem { Color = Color.FromRgb(218, 165, 32), Name = "½ğÉ«" }
-    };
+        _grid.Children.OfType<Border>().ToList().ForEach(x =>
+        {
+            x.BorderBrush = Brushes.Transparent;
+        });
+        if (sender is Border border)
+        {
+            border.BorderBrush = Brushes.DarkSlateGray;
+            AppSingleton.CurrentPenColor = _availableColors[_grid.Children.IndexOf(border)].Color;
+        }
+    }
     #endregion
 
     #region ui
@@ -49,54 +64,18 @@ public partial class ColorPalette : UserControl
         _grid.Columns = 3;
         var borderedCanvases = _availableColors.Select(x =>
         {
-            var canvas = new Canvas
-            {
-                Background = new SolidColorBrush(x.Color),
-                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
-                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Stretch
-            };
-            canvas.PointerPressed += Canvas_PointerPressed;
             var border = new Border
             {
                 Background = new SolidColorBrush(x.Color),
-                Child = canvas,
+                BorderBrush = Brushes.Transparent,
+                BorderThickness = new Thickness(5),
                 HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
                 VerticalAlignment = Avalonia.Layout.VerticalAlignment.Stretch
             };
-            // Create a new style
-            ///canvas.Styles.Add())
+            border.PointerPressed += Border_PointerPressed;
             return border;
         });
         _grid.Children.AddRange(borderedCanvases);
-        /*
-        var buttons = _availableColors.Select(x =>
-        {
-            var button = new ToggleButton
-            {
-                Background = new SolidColorBrush(x.Color),
-                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
-                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Stretch
-            };
-            button.SetValue(ToolTip.TipProperty, x.Name);
-            return button;
-        });
-        _grid.Children.AddRange(buttons);
-        */
-        /*
-        _availableColors.ForEach(x =>
-        {
-            var button = new ToggleButton { Background = new SolidColorBrush(x.Color) };
-            button.SetValue(ToolTip.TipProperty, x.Name);
-        });
-        */
-    }
-
-    private void Canvas_PointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)
-    {
-        var canvas = sender as Canvas;
-        var border = canvas.Parent as Border;
-        border.BorderThickness = new Thickness(2);
-        border.BorderBrush = Brushes.Black;
     }
     #endregion
 }

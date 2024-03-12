@@ -1,5 +1,4 @@
-﻿using Avalonia.Media;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,18 +7,17 @@ using System.Threading.Tasks;
 namespace LegoWallToolX.Entities
 {
     /// <summary>
-    /// 调色板实体
+    /// 文件实体
     /// </summary>
-    internal class ColorPaletteItem
+    internal class FileItem
     {
         /// <summary>
-        /// 颜色名称
+        /// 行数
         /// </summary>
-        public required string Name { get; set; }
-
+        public int RowCount { get; set; }
         /// <summary>
-        /// 颜色
+        /// 列数
         /// </summary>
-        public required Color Color { get; set; }
+        public int ColCount { get; set; }
     }
 }

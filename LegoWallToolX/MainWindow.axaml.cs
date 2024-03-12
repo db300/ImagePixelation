@@ -10,13 +10,19 @@ namespace LegoWallToolX
         {
             InitializeComponent();
 
-            FontFamily = new("Microsoft YaHei UI,Simsun,Æ»·½-¼ò,ËÎÌå-¼ò");
-            Title = $"ÀÖ¸ßÇ½¹¤¾ß {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
+            FontFamily = new("Microsoft YaHei UI,Simsun,è‹¹æ–¹-ç®€,å®‹ä½“-ç®€");
+            Title = $"ä¹é«˜å¢™å·¥å…· {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
         #endregion
 
         #region event handler
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            AppSingleton.FileItem = new Entities.FileItem { ColCount = 48, RowCount = 48 };
+            _mainCanvas.InitCanvas(AppSingleton.FileItem);
+        }
+
         private void Open_Click(object sender, RoutedEventArgs e)
         {
             // Event handling logic goes here
