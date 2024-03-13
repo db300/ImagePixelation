@@ -72,6 +72,7 @@ public partial class ColorPalette : UserControl
                 HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
                 VerticalAlignment = Avalonia.Layout.VerticalAlignment.Stretch
             };
+            border.SetValue(ToolTip.TipProperty, x.Name);
             border.PointerPressed += Border_PointerPressed;
             return border;
         });

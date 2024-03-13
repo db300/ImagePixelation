@@ -10,7 +10,7 @@ using System.Linq;
 namespace LegoWallToolX;
 
 /// <summary>
-/// ÷˜ª≠≤º
+/// ‰∏ªÁîªÂ∏É
 /// </summary>
 public partial class MainCanvas : UserControl
 {
@@ -33,7 +33,8 @@ public partial class MainCanvas : UserControl
         OffsetY = 100
     };
     private readonly List<CanvasRenderingColorItem> _crColorList = [];
-    private readonly Color _basePlateColor = Colors.LightGray;//µ◊∞Â—’…´
+    private readonly List<Rectangle> _rectList = [];
+    private readonly Color _basePlateColor = Colors.LightGray;//Â∫ïÊùøÈ¢úËâ≤
     #endregion
 
     #region method
@@ -43,36 +44,31 @@ public partial class MainCanvas : UserControl
         _crConfig.ColCount = fileItem.ColCount;
 
         _crColorList.Clear();
+        _rectList.Clear();
+        _canvas.Children.Clear();
         for (var r = 0; r < _crConfig.RowCount; r++)
         {
             for (var c = 0; c < _crConfig.ColCount; c++)
             {
-                _crColorList.Add(new CanvasRenderingColorItem { ColNum = c, RowNum = r, Color = _basePlateColor });
+                var crColor = new CanvasRenderingColorItem { ColNum = c, RowNum = r, Color = _basePlateColor };
+                _crColorList.Add(crColor);
+
+                var rect = new Rectangle
+                {
+                    Fill = new SolidColorBrush(crColor.Color),
+                    Width = _crConfig.PixelPerRect,
+                    Height = _crConfig.PixelPerRect,
+                    Stroke = new SolidColorBrush(Colors.DarkGray),
+                    StrokeThickness = 1
+                };
+                var offsetX = _crConfig.OffsetX + crColor.ColNum * _crConfig.PixelPerRect;
+                var offsetY = _crConfig.OffsetY + crColor.RowNum * _crConfig.PixelPerRect;
+                Canvas.SetLeft(rect, offsetX);
+                Canvas.SetTop(rect, offsetY);
+                _rectList.Add(rect);
+                _canvas.Children.Add(rect);
             }
         }
-
-        PaintCanvas();
-    }
-
-    private void PaintCanvas()
-    {
-        _canvas.Children.Clear();
-        _crColorList.ForEach(x =>
-        {
-            var rect = new Rectangle
-            {
-                Fill = new SolidColorBrush(x.Color),
-                Width = _crConfig.PixelPerRect,
-                Height = _crConfig.PixelPerRect,
-                Stroke = new SolidColorBrush(Colors.DarkGray),
-                StrokeThickness = 1
-            };
-            var offsetX = _crConfig.OffsetX + x.ColNum * _crConfig.PixelPerRect;
-            var offsetY = _crConfig.OffsetY + x.RowNum * _crConfig.PixelPerRect;
-            Canvas.SetLeft(rect, offsetX);
-            Canvas.SetTop(rect, offsetY);
-            _canvas.Children.Add(rect);
-        });
     }
     #endregion
 
@@ -85,18 +81,22 @@ public partial class MainCanvas : UserControl
         if (offsetX < 0 || offsetY < 0) return;
         var c = (int)(offsetX / _crConfig.PixelPerRect);
         var r = (int)(offsetY / _crConfig.PixelPerRect);
+        var idx = _crColorList.FindIndex(x => x.ColNum == c && x.RowNum == r);//ÂçïÂÖÉÊ†ºÂ∫èÂàóÂè∑
+        //var idx1 = r * _crConfig.ColCount + c;//ÂçïÂÖÉÊ†ºÂ∫èÂàóÂè∑
 #if DEBUG
-        System.Diagnostics.Debug.WriteLine($"µ±«∞ Û±Íµ„ª˜ µ⁄ {r} –– µ⁄ {c} ¡–...");
+        System.Diagnostics.Debug.WriteLine($"ÂΩìÂâçÈº†Ê†áÁÇπÂáª Á¨¨ {r} Ë°å Á¨¨ {c} Âàó...ÂçïÂÖÉÊ†ºÂ∫èÂàóÂè∑ {idx}");
 #endif
-        var idx = _crColorList.FindIndex(x => x.ColNum == c && x.RowNum == r);
-        if (idx >= 0)
+        if (idx < 0) return;
+        var color = AppSingleton.CurrentPenColor;
+        if (e.GetCurrentPoint(_canvas).Properties.IsLeftButtonPressed)
         {
-            _crColorList[idx].Color = AppSingleton.CurrentPenColor;
-            if (_canvas.Children[idx] is Rectangle rect)
-            {
-                rect.Fill = new SolidColorBrush(AppSingleton.CurrentPenColor);
-            }
         }
+        else if (e.GetCurrentPoint(_canvas).Properties.IsRightButtonPressed)
+        {
+            color = _basePlateColor;
+        }
+        _crColorList[idx].Color = color;
+        _rectList[idx].Fill = new SolidColorBrush(color);
     }
     #endregion
 }
