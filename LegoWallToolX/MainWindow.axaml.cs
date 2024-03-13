@@ -42,6 +42,20 @@ namespace LegoWallToolX
         {
             // Event handling logic goes here
         }
+
+        private void BtnNew_Click(object sender, RoutedEventArgs e)
+        {
+            AppSingleton.FileItem = new Entities.FileItem { ColCount = 48, RowCount = 48 };
+            _mainCanvas.InitCanvas(AppSingleton.FileItem);
+        }
+
+        private void BtnOpen_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+        }
         #endregion
     }
 }
