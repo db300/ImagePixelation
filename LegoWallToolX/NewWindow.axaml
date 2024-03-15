@@ -1,0 +1,46 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
+        x:Class="LegoWallToolX.NewWindow"
+        WindowStartupLocation="CenterOwner"
+        Width="400"
+        Height="250"
+        ShowInTaskbar="False"
+        CanResize="False"
+        Title="新建">
+  <DockPanel>
+    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" FlowDirection="RightToLeft" Height="60">
+      <Button Content="取消" Margin="20,0,0,0" Click="BtnCancel_Click"/>
+      <Button Content="确定" Margin="12,0,0,0" Click="BtnOk_Click"/>
+    </StackPanel>
+    <Grid ColumnDefinitions="Auto,Auto,Auto,*" RowDefinitions="Auto,Auto" ShowGridLines="False" VerticalAlignment="Center" HorizontalAlignment="Center">
+      <TextBlock Text="底板尺寸" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,20,10,20"/>
+      <ComboBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" x:Name="_cmbRowCount"/>
+      <TextBlock Text="×" Grid.Row="0" Grid.Column="2" Margin="10" VerticalAlignment="Center"/>
+      <ComboBox Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" x:Name="_cmbColCount"/>
+      <TextBlock Text="底板颜色" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,20,10,20"/>
+      <ComboBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Width="160" VerticalAlignment="Center" x:Name="_cmbBaseColor" SelectedIndex="0">
+        <ComboBoxItem>
+          <Panel>
+            <Rectangle Fill="LightGray" Height="20" Width="100"/>
+            <TextBlock Text="灰色" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+          </Panel>
+        </ComboBoxItem>
+        <ComboBoxItem>
+          <Panel>
+            <Rectangle Fill="Green" Height="20" Width="100"/>
+            <TextBlock Text="绿色" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+          </Panel>
+        </ComboBoxItem>
+        <ComboBoxItem>
+          <Panel>
+            <Rectangle Fill="White" Height="20" Width="100"/>
+            <TextBlock Text="白色" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+          </Panel>
+        </ComboBoxItem>
+      </ComboBox>
+    </Grid>
+  </DockPanel>
+</Window>

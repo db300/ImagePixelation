@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Avalonia.Media;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,11 @@ namespace LegoWallToolX.Entities
     /// </summary>
     internal class CanvasRenderingConfigItem
     {
+        /// <summary>
+        /// 底板颜色
+        /// </summary>
+        public Color BasePlateColor { get; set; }
+
         /// <summary>
         /// 每个方格像素数
         /// </summary>
@@ -29,11 +35,11 @@ namespace LegoWallToolX.Entities
         /// <summary>
         /// 横向位移
         /// </summary>
-        public int OffsetX { get; set; }
+        public double OffsetX { get; set; }
 
         /// <summary>
         /// 纵向位移
         /// </summary>
-        public int OffsetY { get; set; }
+        public double OffsetY { get; set; }
     }
 }

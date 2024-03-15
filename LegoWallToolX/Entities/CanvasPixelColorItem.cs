@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace LegoWallToolX.Entities
 {
     /// <summary>
-    /// 画布渲染颜色实体
+    /// 画布像素颜色实体
     /// </summary>
-    internal class CanvasRenderingColorItem
+    internal class CanvasPixelColorItem
     {
         /// <summary>
         /// 单元格列号

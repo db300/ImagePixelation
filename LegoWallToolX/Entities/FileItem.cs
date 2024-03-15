@@ -1,8 +1,5 @@
-﻿using System;
+﻿using Avalonia.Media;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LegoWallToolX.Entities
 {
@@ -14,10 +11,18 @@ namespace LegoWallToolX.Entities
         /// <summary>
         /// 行数
         /// </summary>
-        public int RowCount { get; set; }
+        public required int RowCount { get; set; }
         /// <summary>
         /// 列数
         /// </summary>
-        public int ColCount { get; set; }
+        public required int ColCount { get; set; }
+        /// <summary>
+        /// 底板颜色
+        /// </summary>
+        public required Color BasePlateColor { get; set; }
+        /// <summary>
+        /// 画布像素颜色列表
+        /// </summary>
+        public required List<CanvasPixelColorItem> CanvasPixelColorItems { get; set; }
     }
 }

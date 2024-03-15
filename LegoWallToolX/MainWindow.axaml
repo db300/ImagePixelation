@@ -7,20 +7,6 @@
         x:Class="LegoWallToolX.MainWindow"
         Title="LegoWallToolX">
   <DockPanel>
-    <!--
-    <Menu DockPanel.Dock="Top">
-      <MenuItem Header="文件">
-        <MenuItem Header="新建..." Click="New_Click"/>
-        <MenuItem Header="打开..." Click="Open_Click"/>
-        <MenuItem Header="保存..." Click="Save_Click"/>
-        <Separator/>
-        <MenuItem Header="退出" Click="Exit_Click"/>
-      </MenuItem>
-      <MenuItem Header="帮助">
-        <MenuItem Header="关于..." Click="About_Click"/>
-      </MenuItem>
-    </Menu>
-    -->
     <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
       <Button Content="新建" Click="BtnNew_Click"/>
       <Button Content="打开" Click="BtnOpen_Click"/>
