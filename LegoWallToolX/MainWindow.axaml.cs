@@ -1,9 +1,9 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using LegoWallToolX.Entities;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -160,11 +160,25 @@ namespace LegoWallToolX
 #if DEBUG
                 System.Diagnostics.Debug.WriteLine("当前操作系统是OSX");
 #endif
+                // 创建一个新的NativeMenu对象
                 var menu = new NativeMenu();
-                var fileMenu = new NativeMenuItem { Header = "文件" };
-                var newMenuItem = new NativeMenuItem { Header = "新建" };
-                fileMenu.Menu?.Add(newMenuItem);
-                menu.Add(fileMenu);
+
+                // 添加一个新的菜单项
+                var fileMenu = new NativeMenuItem("_File");
+                menu.Items.Add(fileMenu);
+
+                // 在_File菜单下添加一个子菜单项
+                var exitItem = new NativeMenuItem("E_xit");
+                fileMenu.Menu = new NativeMenu();
+                fileMenu.Menu.Items.Add(exitItem);
+
+                // 为退出菜单项添加点击事件
+                exitItem.Click += (s, e) =>
+                {
+                    // 在这里添加你的退出代码
+                };
+
+                // 将创建的菜单设置为应用程序的主菜单
             }
         }
         #endregion

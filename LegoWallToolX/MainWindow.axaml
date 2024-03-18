@@ -6,14 +6,12 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
         x:Class="LegoWallToolX.MainWindow"
         Title="LegoWallToolX">
-  <DockPanel>
+  <NativeMenu.Menu>
     <NativeMenu>
-      <NativeMenuItem Header="文件">
-        <NativeMenu>
-          <NativeMenuItem Header="打开..."/>
-        </NativeMenu>
-      </NativeMenuItem>
+      <NativeMenuItem Header="文件"/>
     </NativeMenu>
+  </NativeMenu.Menu>
+  <DockPanel>
     <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
       <Button Content="新建" Click="BtnNew_Click"/>
       <Button Content="打开" Click="BtnOpen_Click"/>
