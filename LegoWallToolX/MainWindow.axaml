@@ -8,7 +8,13 @@
         Title="LegoWallToolX">
   <NativeMenu.Menu>
     <NativeMenu>
-      <NativeMenuItem Header="文件"/>
+      <NativeMenuItem Header="文件">
+        <NativeMenu>
+          <NativeMenuItem Header="新建..." Click="NativeMenuNew_Click"/>
+          <NativeMenuItem Header="打开..." Click="NativeMenuOpen_Click"/>
+          <NativeMenuItem Header="保存..." Click="NativeMenuSave_Click"/>
+        </NativeMenu>
+      </NativeMenuItem>
     </NativeMenu>
   </NativeMenu.Menu>
   <DockPanel>
