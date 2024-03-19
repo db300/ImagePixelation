@@ -20,7 +20,7 @@ namespace LegoWallToolX
         }
         #endregion
 
-        #region menu
+        #region method
         private async void NewFile()
         {
             var result = await new NewWindow().ShowDialog<FileItem>(this);

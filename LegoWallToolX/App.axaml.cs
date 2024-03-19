@@ -20,5 +20,9 @@ namespace LegoWallToolX
 
             base.OnFrameworkInitializationCompleted();
         }
+
+        private void NativeMenuAbout_Click(object? sender, System.EventArgs e)
+        {
+        }
     }
 }
