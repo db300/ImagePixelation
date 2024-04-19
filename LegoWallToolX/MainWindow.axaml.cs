@@ -32,7 +32,9 @@ namespace LegoWallToolX
                     result.CanvasPixelColorItems.Add(new CanvasPixelColorItem { RowNum = r, ColNum = c, Color = result.BasePlateColor });
                 }
             }
-            _mainCanvas.InitCanvas(result);
+            var editor = new Editor(result);
+            _moduleContainer.AddModule(editor);
+            //_mainCanvas.InitCanvas(result);
         }
 
         private async void OpenFile()
@@ -51,7 +53,9 @@ namespace LegoWallToolX
             var json = System.IO.File.ReadAllText(files[0].Path.LocalPath);
             var fileItem = JsonConvert.DeserializeObject<FileItem>(json);
             if (fileItem is null) return;
-            _mainCanvas.InitCanvas(fileItem);
+            var editor = new Editor(fileItem);
+            _moduleContainer.AddModule(editor);
+            //_mainCanvas.InitCanvas(fileItem);
         }
 
         private async void SaveFile()
@@ -68,9 +72,12 @@ namespace LegoWallToolX
                  }
             });
             if (file is null) return;
+            _moduleContainer.GetModule();
+            /*
             var fileItem = _mainCanvas.GetFileItem();
             var json = JsonConvert.SerializeObject(fileItem);
             System.IO.File.WriteAllText(file.Path.LocalPath, json);
+            */
         }
         #endregion
 

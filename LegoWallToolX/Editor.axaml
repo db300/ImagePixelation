@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:uc="clr-namespace:LegoWallToolX;assembly=LegoWallToolX"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="LegoWallToolX.Editor">
+  <DockPanel>
+    <StackPanel DockPanel.Dock="Right" Width="200" Orientation="Vertical">
+      <Expander Header="预览" IsExpanded="True" HorizontalAlignment="Stretch" Padding="5">
+        <Canvas Height="200" Background="AliceBlue" Margin="0"/>
+      </Expander>
+      <Expander Header="调色盘" IsExpanded="True" HorizontalAlignment="Stretch" Padding="5">
+        <uc:ColorPalette Height="190" Background="AliceBlue"/>
+      </Expander>
+    </StackPanel>
+    <uc:MainCanvas x:Name="_mainCanvas"/>
+  </DockPanel>
+</UserControl>

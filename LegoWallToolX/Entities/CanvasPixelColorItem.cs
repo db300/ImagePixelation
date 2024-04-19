@@ -10,7 +10,7 @@ namespace LegoWallToolX.Entities
     /// <summary>
     /// 画布像素颜色实体
     /// </summary>
-    internal class CanvasPixelColorItem
+    public class CanvasPixelColorItem
     {
         /// <summary>
         /// 单元格列号

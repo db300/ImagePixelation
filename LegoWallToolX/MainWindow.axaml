@@ -18,13 +18,14 @@
     </NativeMenu>
   </NativeMenu.Menu>
   <DockPanel>
+    <!--
     <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
       <Button Content="新建" Click="BtnNew_Click"/>
       <Button Content="打开" Click="BtnOpen_Click"/>
       <Button Content="保存" Click="BtnSave_Click"/>
     </StackPanel>
     <DockPanel>
-      <StackPanel DockPanel.Dock="Left" Background="Blue" Width="100">
+      <StackPanel DockPanel.Dock="Left" Background="Blue" Width="0">
       </StackPanel>
       <StackPanel DockPanel.Dock="Right" Width="200" Orientation="Vertical">
         <Expander Header="预览" IsExpanded="True" HorizontalAlignment="Stretch" Padding="5">
@@ -36,5 +37,7 @@
       </StackPanel>
       <uc:MainCanvas x:Name="_mainCanvas"/>
     </DockPanel>
+    -->
+    <uc:ModuleContainer x:Name="_moduleContainer"/>
   </DockPanel>
 </Window>

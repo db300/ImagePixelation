@@ -6,7 +6,7 @@ namespace LegoWallToolX.Entities
     /// <summary>
     /// 文件实体
     /// </summary>
-    internal class FileItem
+    public class FileItem
     {
         /// <summary>
         /// 行数
