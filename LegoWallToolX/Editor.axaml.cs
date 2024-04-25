@@ -10,11 +10,15 @@ namespace LegoWallToolX;
 public partial class Editor : UserControl
 {
     #region constructor
-    public Editor(Entities.FileItem result)
+    public Editor(Entities.FileItem fileItem)
     {
         InitializeComponent();
 
-        _mainCanvas.InitCanvas(result);
+        _mainCanvas.InitCanvas(fileItem);
     }
+    #endregion
+
+    #region property
+    public Entities.FileItem? FileItem => _mainCanvas?.GetFileItem();
     #endregion
 }

@@ -17,18 +17,19 @@ public partial class ModuleContainer : UserControl
     #endregion
 
     #region method
-    public void AddModule(UserControl module)
+    public void AddModule(UserControl module, string title, string tip)
     {
-        if (this.Content is TabControl tabControl)
+        if (Content is TabControl tabControl)
         {
             var dockPanel = new DockPanel();
             dockPanel.Children.Add(module);
             var textBlock = new TextBlock
             {
-                Text = module.GetType().Name,
+                Text = title,
                 FontSize = 16,
                 MinHeight = 20
             };
+            textBlock.SetValue(ToolTip.TipProperty, tip);
             var tabItem = new TabItem
             {
                 Header = textBlock,
@@ -36,15 +37,18 @@ public partial class ModuleContainer : UserControl
                 MinHeight = 25
             };
             tabControl.Items.Add(tabItem);
+
+            tabControl.SelectedItem = tabItem;
         }
     }
 
-    public void GetModule()
+    public T? GetModule<T>() where T : class
     {
-        if(this.Content is TabControl tabControl)
+        if (this.Content is TabControl tabControl && tabControl.SelectedContent is DockPanel dockPanel)
         {
-            System.Diagnostics.Debug.WriteLine(tabControl.SelectedContent);            
+            return dockPanel.Children[0] as T;
         }
+        return null;
     }
     #endregion
 }

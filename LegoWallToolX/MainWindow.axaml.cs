@@ -5,6 +5,7 @@ using Avalonia.Platform.Storage;
 using LegoWallToolX.Entities;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace LegoWallToolX
@@ -20,6 +21,10 @@ namespace LegoWallToolX
         }
         #endregion
 
+        #region property
+        private int _docIndex;
+        #endregion
+
         #region method
         private async void NewFile()
         {
@@ -33,8 +38,8 @@ namespace LegoWallToolX
                 }
             }
             var editor = new Editor(result);
-            _moduleContainer.AddModule(editor);
-            //_mainCanvas.InitCanvas(result);
+            var title = $"未命名文档 - {++_docIndex}";
+            _moduleContainer.AddModule(editor, title, title);
         }
 
         private async void OpenFile()
@@ -50,12 +55,11 @@ namespace LegoWallToolX
                 }
             });
             if (!(files?.Count > 0)) return;
-            var json = System.IO.File.ReadAllText(files[0].Path.LocalPath);
+            var json = File.ReadAllText(files[0].Path.LocalPath);
             var fileItem = JsonConvert.DeserializeObject<FileItem>(json);
             if (fileItem is null) return;
             var editor = new Editor(fileItem);
-            _moduleContainer.AddModule(editor);
-            //_mainCanvas.InitCanvas(fileItem);
+            _moduleContainer.AddModule(editor, files[0].Name, files[0].Path.LocalPath);
         }
 
         private async void SaveFile()
@@ -72,12 +76,10 @@ namespace LegoWallToolX
                  }
             });
             if (file is null) return;
-            _moduleContainer.GetModule();
-            /*
-            var fileItem = _mainCanvas.GetFileItem();
+            var editor = _moduleContainer.GetModule<Editor>();
+            var fileItem = editor?.FileItem;
             var json = JsonConvert.SerializeObject(fileItem);
-            System.IO.File.WriteAllText(file.Path.LocalPath, json);
-            */
+            File.WriteAllText(file.Path.LocalPath, json);
         }
         #endregion
 
