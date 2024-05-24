@@ -5,7 +5,6 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using LegoWallToolX.Entities;
 using LegoWallToolX.Enums;
-using SkiaSharp;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -84,50 +83,6 @@ public partial class MainCanvas : UserControl
         _canvas.Children.Clear();
         _rectList.AddRange(rectList);
         _canvas.Children.AddRange(rectList);
-        /*
-        foreach(var cpcItem in _fileItem.CanvasPixelColorItems)
-        {
-            var rect = new Rectangle
-            {
-                Fill = new SolidColorBrush(cpcItem.Color),
-                Width = _crConfig.PixelPerRect,
-                Height = _crConfig.PixelPerRect,
-                Stroke = new SolidColorBrush(Colors.DarkGray),
-                StrokeThickness = 1
-            };
-            var offsetX = _crConfig.OffsetX + cpcItem.ColNum * _crConfig.PixelPerRect;
-            var offsetY = _crConfig.OffsetY + cpcItem.RowNum * _crConfig.PixelPerRect;
-            Canvas.SetLeft(rect, offsetX);
-            Canvas.SetTop(rect, offsetY);
-            _rectList.Add(rect);
-            _canvas.Children.Add(rect);
-        }
-        */
-        /*
-        for (var r = 0; r < _crConfig.RowCount; r++)
-        {
-            for (var c = 0; c < _crConfig.ColCount; c++)
-            {
-                var crColor = new CanvasPixelColorItem { ColNum = c, RowNum = r, Color = _crConfig.BasePlateColor };
-                _fileItem.CanvasPixelColorItems.Add(crColor);
-
-                var rect = new Rectangle
-                {
-                    Fill = new SolidColorBrush(crColor.Color),
-                    Width = _crConfig.PixelPerRect,
-                    Height = _crConfig.PixelPerRect,
-                    Stroke = new SolidColorBrush(Colors.DarkGray),
-                    StrokeThickness = 1
-                };
-                var offsetX = _crConfig.OffsetX + crColor.ColNum * _crConfig.PixelPerRect;
-                var offsetY = _crConfig.OffsetY + crColor.RowNum * _crConfig.PixelPerRect;
-                Canvas.SetLeft(rect, offsetX);
-                Canvas.SetTop(rect, offsetY);
-                _rectList.Add(rect);
-                _canvas.Children.Add(rect);
-            }
-        }
-        */
     }
 
     private void MoveCanvas(double offsetX, double offsetY)
@@ -155,6 +110,10 @@ public partial class MainCanvas : UserControl
         if (idx < 0) return;
         var color = AppSingleton.CurrentPenColor;
         _rectList[idx].Fill = new SolidColorBrush(color);
+        if (_fileItem != null) _fileItem.CanvasPixelColorItems[idx].Color = color;
+
+        RectColorChanged?.Invoke(this, idx, color);
+        CanvasPixelColorChanged?.Invoke(this, _fileItem);
     }
 
     /// <summary>
@@ -169,6 +128,10 @@ public partial class MainCanvas : UserControl
         if (idx < 0) return;
         var color = _crConfig.BasePlateColor;
         _rectList[idx].Fill = new SolidColorBrush(color);
+        if (_fileItem != null) _fileItem.CanvasPixelColorItems[idx].Color = color;
+
+        RectColorChanged?.Invoke(this, idx, color);
+        CanvasPixelColorChanged?.Invoke(this, _fileItem);
     }
 
     private int GetActivatedPixelIndex(double x, double y)
@@ -272,5 +235,13 @@ public partial class MainCanvas : UserControl
                 break;
         }
     }
+    #endregion
+
+    #region custom event
+    internal delegate void RectColorChangedHandler(object sender, int idx, Color color);
+    internal event RectColorChangedHandler? RectColorChanged;
+
+    internal delegate void CanvasPixelColorChangedHandler(object sender, FileItem? fileItem);
+    internal event CanvasPixelColorChangedHandler? CanvasPixelColorChanged;
     #endregion
 }
