@@ -80,6 +80,7 @@ namespace LegoWallToolX
             var fileItem = editor?.FileItem;
             var json = JsonConvert.SerializeObject(fileItem);
             File.WriteAllText(file.Path.LocalPath, json);
+            _moduleContainer.UpdateModuleTitle(file.Name, file.Path.LocalPath);
         }
         #endregion
 

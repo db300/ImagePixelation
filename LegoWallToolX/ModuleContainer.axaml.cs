@@ -50,5 +50,14 @@ public partial class ModuleContainer : UserControl
         }
         return null;
     }
+
+    public void UpdateModuleTitle(string title, string tip)
+    {
+        if (Content is TabControl tabControl && tabControl.SelectedItem is TabItem tabItem && tabItem.Header is TextBlock textBlock)
+        {
+            textBlock.Text = title;
+            textBlock.SetValue(ToolTip.TipProperty, tip);
+        }
+    }
     #endregion
 }
