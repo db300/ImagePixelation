@@ -70,10 +70,10 @@ namespace LegoWallToolX
             {
                 DefaultExtension = "legox",
                 FileTypeChoices = new List<FilePickerFileType>
-                 {
+                {
                      new("legox文件") { Patterns = new List<string> { "*.legox" } },
                      new("所有文件") { Patterns = new List<string> { "*.*" } }
-                 }
+                }
             });
             if (file is null) return;
             var editor = _moduleContainer.GetModule<Editor>();
