@@ -10,6 +10,7 @@
         <Setter Property="FontFamily" Value="Microsoft YaHei UI,Simsun,苹方-简,宋体-简"/>
       </Style>
     </Application.Styles>
+  <Application.Name>LegoWallToolX</Application.Name>
   <NativeMenu.Menu>
     <NativeMenu>
       <NativeMenuItem Header="关于 乐高墙工具" Click="NativeMenuAbout_Click"/>
