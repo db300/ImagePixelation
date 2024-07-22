@@ -48,8 +48,6 @@
   <ItemGroup>
     <Compile Include="CanvasRendingConfigItem.cs" />
     <Compile Include="ColorPaletteItem.cs" />
-    <Compile Include="ImageConfigItem.cs" />
-    <Compile Include="LegoConfigItem.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
