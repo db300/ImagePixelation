@@ -66,6 +66,11 @@ public partial class Editor : UserControl
             }
         }
     }
+
+    internal void ImportBack(string localPath)
+    {
+        _mainCanvas.ImportBack(localPath);
+    }
     #endregion
 
     #region event handler

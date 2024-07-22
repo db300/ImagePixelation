@@ -82,6 +82,24 @@ namespace LegoWallToolX
             File.WriteAllText(file.Path.LocalPath, json);
             _moduleContainer.UpdateModuleTitle(file.Name, file.Path.LocalPath);
         }
+
+        private async void ImportBack()
+        {
+            var editor = _moduleContainer.GetModule<Editor>();
+            if (editor is null) return;
+            var topLevel = GetTopLevel(this);
+            if (topLevel is null) return;
+            var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            {
+                FileTypeFilter = new List<FilePickerFileType>
+                {
+                    new("图片文件") { Patterns = new List<string> { "*.png", "*.jpg", "*.jpeg", "*.bmp" } },
+                    new("所有文件") { Patterns = new List<string> { "*.*" } }
+                }
+            });
+            if (!(files?.Count > 0)) return;
+            editor.ImportBack(files[0].Path.LocalPath);
+        }
         #endregion
 
         #region event handler
@@ -115,6 +133,11 @@ namespace LegoWallToolX
             SaveFile();
         }
 
+        private void MenuImportBack_Click(object? sender, RoutedEventArgs e)
+        {
+            ImportBack();
+        }
+
         private void NativeMenuNew_Click(object? sender, System.EventArgs e)
         {
             NewFile();
@@ -142,7 +165,7 @@ namespace LegoWallToolX
 #if DEBUG
                 System.Diagnostics.Debug.WriteLine("当前操作系统是Windows");
 #endif
-                var menu = new Menu();
+                //文件菜单
                 var menuFile = new MenuItem { Header = "文件" };
                 var menuNew = new MenuItem { Header = "新建..." };
                 menuNew.Click += MenuNew_Click;
@@ -153,7 +176,15 @@ namespace LegoWallToolX
                 menuFile.Items.Add(menuNew);
                 menuFile.Items.Add(menuOpen);
                 menuFile.Items.Add(menuSave);
+                //编辑菜单
+                var menuEdit = new MenuItem { Header = "编辑" };
+                var menuImportBack = new MenuItem { Header = "导入背景图片..." };
+                menuImportBack.Click += MenuImportBack_Click;
+                menuEdit.Items.Add(menuImportBack);
+
+                var menu = new Menu();
                 menu.Items.Add(menuFile);
+                menu.Items.Add(menuEdit);
                 if (this.Content is DockPanel dockPanel)
                 {
                     DockPanel.SetDock(menu, Dock.Top);

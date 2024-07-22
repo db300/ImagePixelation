@@ -3,8 +3,10 @@ using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using LegoWallToolX.Entities;
 using LegoWallToolX.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -127,7 +129,7 @@ public partial class MainCanvas : UserControl
 #endif
         if (idx < 0) return;
         var color = _crConfig.BasePlateColor;
-        _rectList[idx].Fill = new SolidColorBrush(color);
+        _rectList[idx].Fill = new SolidColorBrush(color, 0.5);
         if (_fileItem != null) _fileItem.CanvasPixelColorItems[idx].Color = color;
 
         RectColorChanged?.Invoke(this, idx, color);
@@ -148,6 +150,12 @@ public partial class MainCanvas : UserControl
         System.Diagnostics.Debug.WriteLine($"当前鼠标点击 第 {r} 行 第 {c} 列...单元格序列号 {idx}");
 #endif
         return idx;
+    }
+
+    internal void ImportBack(string localPath)
+    {
+        var image = new Image { Source = new Bitmap(localPath) };
+        _canvas.Children.Insert(0, image);
     }
     #endregion
 
