@@ -43,6 +43,7 @@ public partial class MainCanvas : UserControl
         OffsetY = 100
     };
     private readonly List<Rectangle> _rectList = [];
+    private Image _backImage;
     private Point _pointerStartPosition;
     private Point _pointerEndPostion;
     #endregion
@@ -89,6 +90,25 @@ public partial class MainCanvas : UserControl
             Canvas.SetLeft(rect, left + offsetX);
             Canvas.SetTop(rect, top + offsetY);
         }
+        if (_backImage != null)
+        {
+            var backLeft = Canvas.GetLeft(_backImage);
+            var backTop = Canvas.GetTop(_backImage);
+            Canvas.SetLeft(_backImage, backLeft + offsetX);
+            Canvas.SetTop(_backImage, backTop + offsetY);
+        }
+    }
+
+    private void MoveBackImage(double offsetX, double offsetY)
+    {
+        if (_backImage is null) return;
+        _fileItem.BackImageItem.OffsetX += offsetX;
+        _fileItem.BackImageItem.OffsetY += offsetY;
+
+        var backLeft = Canvas.GetLeft(_backImage);
+        var backTop = Canvas.GetTop(_backImage);
+        Canvas.SetLeft(_backImage, backLeft + offsetX);
+        Canvas.SetTop(_backImage, backTop + offsetY);
     }
 
     /// <summary>
@@ -145,8 +165,18 @@ public partial class MainCanvas : UserControl
 
     internal void ImportBack(string localPath)
     {
-        var image = new Image { Source = new Bitmap(localPath) };
-        _canvas.Children.Insert(0, image);
+        if (_fileItem is null) return;
+        _fileItem.BackImageItem = new BackImageConfigItem { FileName = localPath, ScaleRatio = 1, OffsetX = 0, OffsetY = 0 };
+        _backImage = new Image
+        {
+            Source = new Bitmap(localPath),
+            RenderTransform = new ScaleTransform(1, 1)
+        };
+        var offsetX = _crConfig.OffsetX + 0;
+        var offsetY = _crConfig.OffsetY + 0;
+        Canvas.SetLeft(_backImage, offsetX);
+        Canvas.SetTop(_backImage, offsetY);
+        _canvas.Children.Insert(0, _backImage);
     }
     #endregion
 

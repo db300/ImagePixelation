@@ -24,5 +24,9 @@ namespace LegoWallToolX.Entities
         /// 画布像素颜色列表
         /// </summary>
         public required List<CanvasPixelColorItem> CanvasPixelColorItems { get; set; }
+        /// <summary>
+        /// 背景图配置
+        /// </summary>
+        public BackImageConfigItem? BackImageItem { get; set; }
     }
 }
