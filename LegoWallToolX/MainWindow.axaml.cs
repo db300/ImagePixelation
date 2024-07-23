@@ -34,7 +34,7 @@ namespace LegoWallToolX
             {
                 for (var c = 0; c < result.ColCount; c++)
                 {
-                    result.CanvasPixelColorItems.Add(new CanvasPixelColorItem { RowNum = r, ColNum = c, Color = result.BasePlateColor });
+                    result.CanvasPixelColorItems.Add(new CanvasPixelColorItem { RowNum = r, ColNum = c, Color = result.BasePlateColor, IsBase = true });
                 }
             }
             var editor = new Editor(result);
@@ -151,6 +151,11 @@ namespace LegoWallToolX
         private void NativeMenuSave_Click(object? sender, System.EventArgs e)
         {
             SaveFile();
+        }
+
+        private void NativeMenuImportBack_Click(object? sender, System.EventArgs e)
+        {
+            ImportBack();
         }
         #endregion
 

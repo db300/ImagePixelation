@@ -30,7 +30,7 @@ public partial class Editor : UserControl
     #endregion
 
     #region property
-    public FileItem? FileItem => _mainCanvas?.GetFileItem();
+    public FileItem? FileItem => _mainCanvas?.FileItem;
     #endregion
 
     #region method

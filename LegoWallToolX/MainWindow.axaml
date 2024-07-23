@@ -15,6 +15,11 @@
           <NativeMenuItem Header="保存..." Click="NativeMenuSave_Click"/>
         </NativeMenu>
       </NativeMenuItem>
+      <NativeMenuItem Header="编辑">
+        <NativeMenu>
+          <NativeMenuItem Header="导入背景图片..." Click="NativeMenuImportBack_Click"/>
+        </NativeMenu>
+      </NativeMenuItem>
     </NativeMenu>
   </NativeMenu.Menu>
   <DockPanel>

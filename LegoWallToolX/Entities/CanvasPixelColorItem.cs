@@ -26,5 +26,10 @@ namespace LegoWallToolX.Entities
         /// 单元格颜色
         /// </summary>
         public Color Color { get; set; }
+
+        /// <summary>
+        /// 底板标识
+        /// </summary>
+        public bool IsBase { get; set; }
     }
 }

@@ -31,6 +31,7 @@ public partial class MainCanvas : UserControl
     #endregion
 
     #region property
+    internal FileItem? FileItem => _fileItem;
     private FileItem? _fileItem;
     private readonly CanvasRenderingConfigItem _crConfig = new()
     {
@@ -47,16 +48,6 @@ public partial class MainCanvas : UserControl
     #endregion
 
     #region method
-    internal FileItem? GetFileItem()
-    {
-        if (_fileItem is null) return null;
-        for (var i = 0; i < _rectList.Count; i++)
-        {
-            if (_rectList[i].Fill is SolidColorBrush brush) _fileItem.CanvasPixelColorItems[i].Color = brush.Color;
-        }
-        return _fileItem;
-    }
-
     internal void InitCanvas(FileItem fileItem)
     {
         _fileItem = fileItem;
@@ -69,7 +60,7 @@ public partial class MainCanvas : UserControl
         {
             var rect = new Rectangle
             {
-                Fill = new SolidColorBrush(x.Color),
+                Fill = new SolidColorBrush(x.Color, x.IsBase ? 0.5 : 1),
                 Width = _crConfig.PixelPerRect,
                 Height = _crConfig.PixelPerRect,
                 Stroke = new SolidColorBrush(Colors.DarkGray),
@@ -82,8 +73,8 @@ public partial class MainCanvas : UserControl
             return rect;
         }).ToList();
         _rectList.Clear();
-        _canvas.Children.Clear();
         _rectList.AddRange(rectList);
+        _canvas.Children.Clear();
         _canvas.Children.AddRange(rectList);
     }
 
@@ -106,15 +97,15 @@ public partial class MainCanvas : UserControl
     /// <param name="idx">像素格序号</param>
     private void DrawPixel(int idx)
     {
-#if DEBUG
-        System.Diagnostics.Debug.WriteLine($"当前绘制像素格 序列号 {idx}");
-#endif
         if (idx < 0) return;
         var color = AppSingleton.CurrentPenColor;
         _rectList[idx].Fill = new SolidColorBrush(color);
-        if (_fileItem != null) _fileItem.CanvasPixelColorItems[idx].Color = color;
+        if (_fileItem != null)
+        {
+            _fileItem.CanvasPixelColorItems[idx].Color = color;
+            _fileItem.CanvasPixelColorItems[idx].IsBase = false;
+        }
 
-        RectColorChanged?.Invoke(this, idx, color);
         CanvasPixelColorChanged?.Invoke(this, _fileItem);
     }
 
@@ -124,15 +115,15 @@ public partial class MainCanvas : UserControl
     /// <param name="idx">像素格序号</param>
     private void ErasePixel(int idx)
     {
-#if DEBUG
-        System.Diagnostics.Debug.WriteLine($"当前擦除像素格 序列号 {idx}");
-#endif
         if (idx < 0) return;
         var color = _crConfig.BasePlateColor;
         _rectList[idx].Fill = new SolidColorBrush(color, 0.5);
-        if (_fileItem != null) _fileItem.CanvasPixelColorItems[idx].Color = color;
+        if (_fileItem != null)
+        {
+            _fileItem.CanvasPixelColorItems[idx].Color = color;
+            _fileItem.CanvasPixelColorItems[idx].IsBase = true;
+        }
 
-        RectColorChanged?.Invoke(this, idx, color);
         CanvasPixelColorChanged?.Invoke(this, _fileItem);
     }
 
@@ -246,9 +237,6 @@ public partial class MainCanvas : UserControl
     #endregion
 
     #region custom event
-    internal delegate void RectColorChangedHandler(object sender, int idx, Color color);
-    internal event RectColorChangedHandler? RectColorChanged;
-
     internal delegate void CanvasPixelColorChangedHandler(object sender, FileItem? fileItem);
     internal event CanvasPixelColorChangedHandler? CanvasPixelColorChanged;
     #endregion
