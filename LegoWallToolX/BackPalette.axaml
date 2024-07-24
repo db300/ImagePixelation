@@ -1,0 +1,15 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="LegoWallToolX.BackPalette">
+  <Grid ColumnDefinitions="100,*" RowDefinitions="Auto,Auto,Auto">
+    <TextBlock Text="横向偏移：" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
+    <TextBox x:Name="_txtOffsetX" Text="0" Grid.Row="0" Grid.Column="1"/>
+    <TextBlock Text="纵向偏移：" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+    <TextBox x:Name="_txtOffsetY" Text="0" Grid.Row="1" Grid.Column="1"/>
+    <TextBlock Text="缩放比例：" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
+    <TextBox x:Name="_txtScaleRatio" Text="1" Grid.Row="2" Grid.Column="1"/>
+  </Grid>
+</UserControl>

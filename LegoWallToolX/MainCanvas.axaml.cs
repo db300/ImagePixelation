@@ -178,6 +178,15 @@ public partial class MainCanvas : UserControl
         Canvas.SetTop(_backImage, offsetY);
         _canvas.Children.Insert(0, _backImage);
     }
+
+    internal void UpdateBackLayout(int offsetX, int offsetY, double scaleRatio)
+    {
+        if (_backImage is null) return;
+        var transformGroup = new TransformGroup();
+        transformGroup.Children.Add(new ScaleTransform(scaleRatio, scaleRatio));
+        transformGroup.Children.Add(new TranslateTransform(offsetX, offsetY));
+        _backImage.RenderTransform = transformGroup;
+    }
     #endregion
 
     #region event handler

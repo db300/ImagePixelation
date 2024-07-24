@@ -13,6 +13,9 @@
       <Expander Header="调色盘" IsExpanded="True" HorizontalAlignment="Stretch" Padding="5">
         <uc:ColorPalette Height="190"/>
       </Expander>
+      <Expander Header="背景图" IsExpanded="True" HorizontalAlignment="Stretch" Padding="5">
+        <uc:BackPalette x:Name="_backPalette" Height="200"/>
+      </Expander>
     </StackPanel>
     <uc:MainCanvas x:Name="_mainCanvas"/>
   </DockPanel>

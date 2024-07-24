@@ -25,6 +25,8 @@ public partial class Editor : UserControl
         _mainCanvas.InitCanvas(fileItem);
         _mainCanvas.CanvasPixelColorChanged += MainCanvas_CanvasPixelColorChanged;
 
+        _backPalette.LayoutChanged += BackPalette_LayoutChanged;
+
         DrawPreviewCanvas(fileItem);
     }
     #endregion
@@ -77,6 +79,11 @@ public partial class Editor : UserControl
     private void MainCanvas_CanvasPixelColorChanged(object sender, FileItem? fileItem)
     {
         DrawPreviewCanvas(fileItem);
+    }
+
+    private void BackPalette_LayoutChanged(object? sender, int offsetX, int offsetY, double scaleRatio)
+    {
+        _mainCanvas.UpdateBackLayout(offsetX, offsetY, scaleRatio);
     }
     #endregion
 }
