@@ -13,6 +13,8 @@
           <NativeMenuItem Header="新建..." Click="NativeMenuNew_Click"/>
           <NativeMenuItem Header="打开..." Click="NativeMenuOpen_Click"/>
           <NativeMenuItem Header="保存..." Click="NativeMenuSave_Click"/>
+          <NativeMenuItemSeparator/>
+          <NativeMenuItem Header="导出..." Click="NativeMenuExport_Click"/>
         </NativeMenu>
       </NativeMenuItem>
       <NativeMenuItem Header="编辑">

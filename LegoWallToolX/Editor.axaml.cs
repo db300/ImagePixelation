@@ -69,6 +69,47 @@ public partial class Editor : UserControl
         }
     }
 
+    internal void ExportImage(string localPath)
+    {
+        var fileItem = FileItem;
+        if (fileItem is null) return;
+        const int unitSize = 15;
+        var width = fileItem.ColCount * unitSize;
+        var height = fileItem.RowCount * unitSize;
+        using (var img = new SKBitmap(width, height))
+        {
+            using (var canvas = new SKCanvas(img))
+            {
+                canvas.Clear(SKColors.White);
+
+                fileItem.CanvasPixelColorItems.ForEach(x =>
+                {
+                    // 创建用于填充的画笔
+                    using (var fillPaint = new SKPaint { Color = new SKColor(x.Color.R, x.Color.G, x.Color.B, x.Color.A), IsAntialias = true })
+                    {
+                        var offsetX = x.ColNum * unitSize;
+                        var offsetY = x.RowNum * unitSize;
+                        canvas.DrawRect(offsetX, offsetY, unitSize, unitSize, fillPaint);
+                    }
+                    // 创建用于绘制边框的画笔
+                    using (var strokePaint = new SKPaint { Color = SKColors.DarkGray, IsAntialias = true, Style = SKPaintStyle.Stroke, StrokeWidth = 1 })
+                    {
+                        var offsetX = x.ColNum * unitSize;
+                        var offsetY = x.RowNum * unitSize;
+                        canvas.DrawRect(offsetX, offsetY, unitSize, unitSize, strokePaint);
+                    }
+                });
+            }
+            using (var stream = new MemoryStream())
+            {
+                img.Encode(stream, SKEncodedImageFormat.Png, 100);
+                stream.Position = 0;
+                var bitmap = new Bitmap(stream);
+                bitmap.Save(localPath);
+            }
+        }
+    }
+
     internal void ImportBack(string localPath)
     {
         _mainCanvas.ImportBack(localPath);

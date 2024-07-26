@@ -64,6 +64,8 @@ namespace LegoWallToolX
 
         private async void SaveFile()
         {
+            var editor = _moduleContainer.GetModule<Editor>();
+            if (editor is null) return;
             var topLevel = GetTopLevel(this);
             if (topLevel is null) return;
             var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
@@ -71,16 +73,34 @@ namespace LegoWallToolX
                 DefaultExtension = "legox",
                 FileTypeChoices = new List<FilePickerFileType>
                 {
-                     new("legox文件") { Patterns = new List<string> { "*.legox" } },
-                     new("所有文件") { Patterns = new List<string> { "*.*" } }
+                    new("legox文件") { Patterns = new List<string> { "*.legox" } },
+                    new("所有文件") { Patterns = new List<string> { "*.*" } }
                 }
             });
             if (file is null) return;
-            var editor = _moduleContainer.GetModule<Editor>();
             var fileItem = editor?.FileItem;
             var json = JsonConvert.SerializeObject(fileItem);
             File.WriteAllText(file.Path.LocalPath, json);
             _moduleContainer.UpdateModuleTitle(file.Name, file.Path.LocalPath);
+        }
+
+        private async void ExportImage()
+        {
+            var editor = _moduleContainer.GetModule<Editor>();
+            if (editor is null) return;
+            var topLevel = GetTopLevel(this);
+            if (topLevel is null) return;
+            var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+            {
+                DefaultExtension = "png",
+                FileTypeChoices = new List<FilePickerFileType>
+                {
+                    new("图片文件") { Patterns = new List<string> { "*.png", "*.jpg", "*.jpeg", "*.bmp" } },
+                    new("所有文件") { Patterns = new List<string> { "*.*" } }
+                }
+            });
+            if (file is null) return;
+            editor.ExportImage(file.Path.LocalPath);
         }
 
         private async void ImportBack()
@@ -133,6 +153,11 @@ namespace LegoWallToolX
             SaveFile();
         }
 
+        private void MenuExport_Click(object? sender, RoutedEventArgs e)
+        {
+            ExportImage();
+        }
+
         private void MenuImportBack_Click(object? sender, RoutedEventArgs e)
         {
             ImportBack();
@@ -151,6 +176,11 @@ namespace LegoWallToolX
         private void NativeMenuSave_Click(object? sender, System.EventArgs e)
         {
             SaveFile();
+        }
+
+        private void NativeMenuExport_Click(object? sender, System.EventArgs e)
+        {
+            ExportImage();
         }
 
         private void NativeMenuImportBack_Click(object? sender, System.EventArgs e)
@@ -178,9 +208,13 @@ namespace LegoWallToolX
                 menuOpen.Click += MenuOpen_Click;
                 var menuSave = new MenuItem { Header = "保存..." };
                 menuSave.Click += MenuSave_Click;
+                var menuExport = new MenuItem { Header = "导出..." };
+                menuExport.Click += MenuExport_Click;
                 menuFile.Items.Add(menuNew);
                 menuFile.Items.Add(menuOpen);
                 menuFile.Items.Add(menuSave);
+                menuFile.Items.Add(new Separator());// 添加分隔线
+                menuFile.Items.Add(menuExport);
                 //编辑菜单
                 var menuEdit = new MenuItem { Header = "编辑" };
                 var menuImportBack = new MenuItem { Header = "导入背景图片..." };
