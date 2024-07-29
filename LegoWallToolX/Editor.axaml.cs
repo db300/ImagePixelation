@@ -74,28 +74,42 @@ public partial class Editor : UserControl
         var fileItem = FileItem;
         if (fileItem is null) return;
         const int unitSize = 15;
-        var width = fileItem.ColCount * unitSize;
-        var height = fileItem.RowCount * unitSize;
+        const int padding = 15;
+        var width = fileItem.ColCount * unitSize + 2 * padding;
+        var height = fileItem.RowCount * unitSize + 2 * padding;
         using (var img = new SKBitmap(width, height))
         {
             using (var canvas = new SKCanvas(img))
             {
                 canvas.Clear(SKColors.White);
 
+                //绘制行号
+                for (var i = 0; i < fileItem.RowCount; i++)
+                {
+                    var text = new SKPaint { Color = SKColors.Black, TextSize = 10, IsAntialias = true };
+                    canvas.DrawText((i+1).ToString(), 0, i * unitSize + padding+10 , text);
+                }
+                //绘制列号
+                for (var i = 0; i < fileItem.ColCount; i++)
+                {
+                    var text = new SKPaint { Color = SKColors.Black, TextSize = 10, IsAntialias = true };
+                    canvas.DrawText((i+1).ToString(), i * unitSize + padding, padding-5, text);
+                }
+
                 fileItem.CanvasPixelColorItems.ForEach(x =>
                 {
                     // 创建用于填充的画笔
                     using (var fillPaint = new SKPaint { Color = new SKColor(x.Color.R, x.Color.G, x.Color.B, x.Color.A), IsAntialias = true })
                     {
-                        var offsetX = x.ColNum * unitSize;
-                        var offsetY = x.RowNum * unitSize;
+                        var offsetX = x.ColNum * unitSize + padding;
+                        var offsetY = x.RowNum * unitSize + padding;
                         canvas.DrawRect(offsetX, offsetY, unitSize, unitSize, fillPaint);
                     }
                     // 创建用于绘制边框的画笔
                     using (var strokePaint = new SKPaint { Color = SKColors.DarkGray, IsAntialias = true, Style = SKPaintStyle.Stroke, StrokeWidth = 1 })
                     {
-                        var offsetX = x.ColNum * unitSize;
-                        var offsetY = x.RowNum * unitSize;
+                        var offsetX = x.ColNum * unitSize + padding;
+                        var offsetY = x.RowNum * unitSize + padding;
                         canvas.DrawRect(offsetX, offsetY, unitSize, unitSize, strokePaint);
                     }
                 });
