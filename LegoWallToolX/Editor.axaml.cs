@@ -87,13 +87,17 @@ public partial class Editor : UserControl
                 for (var i = 0; i < fileItem.RowCount; i++)
                 {
                     var text = new SKPaint { Color = SKColors.Black, TextSize = 10, IsAntialias = true };
-                    canvas.DrawText((i+1).ToString(), 0, i * unitSize + padding+10 , text);
+                    var rowNum = (i + 1).ToString();
+                    canvas.DrawText(rowNum, 0, i * unitSize + padding + 10, text);
+                    canvas.DrawText(rowNum, fileItem.ColCount * unitSize + padding, i * unitSize + padding + 10, text);
                 }
                 //绘制列号
                 for (var i = 0; i < fileItem.ColCount; i++)
                 {
                     var text = new SKPaint { Color = SKColors.Black, TextSize = 10, IsAntialias = true };
-                    canvas.DrawText((i+1).ToString(), i * unitSize + padding, padding-5, text);
+                    var colNum = (i + 1).ToString();
+                    canvas.DrawText(colNum, i * unitSize + padding, padding - 5, text);
+                    canvas.DrawText(colNum, i * unitSize + padding, fileItem.RowCount * unitSize + padding + 10, text);
                 }
 
                 fileItem.CanvasPixelColorItems.ForEach(x =>
@@ -113,6 +117,11 @@ public partial class Editor : UserControl
                         canvas.DrawRect(offsetX, offsetY, unitSize, unitSize, strokePaint);
                     }
                 });
+
+                //绘制中心线
+                var linePaint = new SKPaint { Color = SKColors.OrangeRed, StrokeWidth = 1 };
+                canvas.DrawLine(padding + fileItem.ColCount / 2 * unitSize, padding, padding + fileItem.ColCount / 2 * unitSize, padding + fileItem.RowCount * unitSize, linePaint);
+                canvas.DrawLine(padding, padding + fileItem.RowCount / 2 * unitSize, padding + fileItem.ColCount * unitSize, padding + fileItem.RowCount / 2 * unitSize, linePaint);
             }
             using (var stream = new MemoryStream())
             {
