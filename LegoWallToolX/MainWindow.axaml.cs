@@ -103,6 +103,13 @@ namespace LegoWallToolX
             editor.ExportImage(file.Path.LocalPath);
         }
 
+        private void CloseFile()
+        {
+            var editor = _moduleContainer.GetModule<Editor>();
+            if (editor is null) return;
+            _moduleContainer.CloseModule();
+        }
+
         private async void ImportBack()
         {
             var editor = _moduleContainer.GetModule<Editor>();
@@ -158,6 +165,11 @@ namespace LegoWallToolX
             ExportImage();
         }
 
+        private void MenuClose_Click(object? sender, RoutedEventArgs e)
+        {
+            CloseFile();
+        }
+
         private void MenuImportBack_Click(object? sender, RoutedEventArgs e)
         {
             ImportBack();
@@ -181,6 +193,11 @@ namespace LegoWallToolX
         private void NativeMenuExport_Click(object? sender, System.EventArgs e)
         {
             ExportImage();
+        }
+
+        private void NativeMenuClose_Click(object? sender, System.EventArgs e)
+        {
+            CloseFile();
         }
 
         private void NativeMenuImportBack_Click(object? sender, System.EventArgs e)
@@ -210,11 +227,15 @@ namespace LegoWallToolX
                 menuSave.Click += MenuSave_Click;
                 var menuExport = new MenuItem { Header = "导出..." };
                 menuExport.Click += MenuExport_Click;
+                var menuClose = new MenuItem { Header = "关闭" };
+                menuClose.Click += MenuClose_Click;
                 menuFile.Items.Add(menuNew);
                 menuFile.Items.Add(menuOpen);
                 menuFile.Items.Add(menuSave);
                 menuFile.Items.Add(new Separator());// 添加分隔线
                 menuFile.Items.Add(menuExport);
+                menuFile.Items.Add(new Separator());// 添加分隔线
+                menuFile.Items.Add(menuClose);
                 //编辑菜单
                 var menuEdit = new MenuItem { Header = "编辑" };
                 var menuImportBack = new MenuItem { Header = "导入背景图片..." };

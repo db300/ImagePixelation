@@ -20,12 +20,15 @@ public partial class BackPalette : UserControl
     #region event handler
     private void TxtLayout_TextChanged(object? sender, TextChangedEventArgs e)
     {
-        if (int.TryParse(_txtOffsetX.Text, out var offsetX) && int.TryParse(_txtOffsetY.Text, out var offsetY) && double.TryParse(_txtScaleRatio.Text, out var scaleRatio)) LayoutChanged?.Invoke(this, offsetX, offsetY, scaleRatio);
+        if (int.TryParse(_txtOffsetX.Text, out var offsetX) && int.TryParse(_txtOffsetY.Text, out var offsetY) && double.TryParse(_txtScaleRatio.Text, out var scaleRatio))
+        {
+            LayoutChanged?.Invoke(this, offsetX, offsetY, scaleRatio);
+        }
     }
     #endregion
 
     #region custom event
-    public delegate void LayoutChangedEventHandler(object? sender, int offsetX, int offsetY, double scaleRatio);
-    public event LayoutChangedEventHandler? LayoutChanged;
+    internal delegate void LayoutChangedEventHandler(object? sender, int offsetX, int offsetY, double scaleRatio);
+    internal event LayoutChangedEventHandler? LayoutChanged;
     #endregion
 }

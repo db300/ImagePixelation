@@ -23,6 +23,11 @@ namespace LegoWallToolX.Entities
         public int PixelPerRect { get; set; }
 
         /// <summary>
+        /// 行列号显示标识
+        /// </summary>
+        public bool RowColNumberVisible { get; set; }
+
+        /// <summary>
         /// 行数
         /// </summary>
         public int RowCount { get; set; }

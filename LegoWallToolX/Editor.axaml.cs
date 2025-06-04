@@ -26,6 +26,7 @@ public partial class Editor : UserControl
         _mainCanvas.CanvasPixelColorChanged += MainCanvas_CanvasPixelColorChanged;
 
         _backPalette.LayoutChanged += BackPalette_LayoutChanged;
+        _viewPalette.ViewChanged += ViewPalette_ViewChanged;
 
         DrawPreviewCanvas(fileItem);
     }
@@ -148,6 +149,21 @@ public partial class Editor : UserControl
     private void BackPalette_LayoutChanged(object? sender, int offsetX, int offsetY, double scaleRatio)
     {
         _mainCanvas.UpdateBackLayout(offsetX, offsetY, scaleRatio);
+    }
+
+    private void ViewPalette_ViewChanged(object? sender, Enums.ViewMode viewMode, object? value)
+    {
+        switch (viewMode)
+        {
+            case Enums.ViewMode.RowColNumberVisible:
+                if (value is bool visible) _mainCanvas.UpdateView4RowColNumVisible(visible);
+                break;
+            case Enums.ViewMode.PixelPerRect:
+                if (value is int pixelPerRect && pixelPerRect > 0) _mainCanvas.UpdateView4PixelPerRect(pixelPerRect);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(viewMode), viewMode, null);
+        }
     }
     #endregion
 }

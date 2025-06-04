@@ -42,6 +42,14 @@ public partial class ModuleContainer : UserControl
         }
     }
 
+    public void CloseModule()
+    {
+        if (Content is TabControl tabControl && tabControl.SelectedItem is TabItem tabItem)
+        {
+            tabControl.Items.Remove(tabItem);
+        }
+    }
+
     public T? GetModule<T>() where T : class
     {
         if (this.Content is TabControl tabControl && tabControl.SelectedContent is DockPanel dockPanel)
